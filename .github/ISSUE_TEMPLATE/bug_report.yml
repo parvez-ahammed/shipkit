@@ -1,0 +1,98 @@
+name: Bug report
+description: A skill, script or hook did the wrong thing.
+title: "[bug] <skill>: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please remove secrets, tokens, internal URLs and private data
+        from anything you paste. Security problems go to the Security tab
+        (Report a vulnerability), not here.
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Skill or hook
+      options:
+        - review-branch
+        - fix-bug
+        - groom-issue
+        - deliver-issue
+        - price-product
+        - simplify-code
+        - trim-comments
+        - build-story
+        - test-branch
+        - grill-feature
+        - audit-app
+        - find-ux-gaps
+        - refactor
+        - enforce-clean-architecture
+        - find-shared-code
+        - deploy-to-vps
+        - add-mcp-server
+        - boost-seo
+        - make-video
+        - make-demo
+        - write-user-guide
+        - write-plainly
+        - show-usage
+        - fill-timesheet
+        - "hook: secret-hygiene"
+        - "hook: safe-commit"
+        - plugin install / marketplace
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you ask for, and what did the skill do?
+      placeholder: I ran /shipkit:fix-bug on ... and it ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. /plugin install shipkit@shipkit
+        2. /shipkit:...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Output or error
+      description: Relevant output, error messages or screenshots. Remove anything private.
+      render: text
+  - type: input
+    id: shipkit-version
+    attributes:
+      label: ShipKit version
+      placeholder: "1.0.0"
+  - type: input
+    id: claude-version
+    attributes:
+      label: Claude Code version
+      description: Output of `claude --version`.
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - WSL
+        - other
+    validations:
+      required: true

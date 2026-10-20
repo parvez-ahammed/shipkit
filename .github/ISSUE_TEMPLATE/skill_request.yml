@@ -1,0 +1,50 @@
+name: Skill request
+description: Propose a new skill, or a new capability for an existing one.
+title: "[skill] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Skill names are verb-object in kebab-case (for example `fix-bug`, `add-mcp-server`)
+        and are invoked as `/shipkit:<name>`. See CONTRIBUTING.md if you want to build it yourself.
+  - type: input
+    id: name
+    attributes:
+      label: Proposed skill name
+      placeholder: write-release-notes
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What task do you keep doing by hand, or what does Claude get wrong without a skill?
+    validations:
+      required: true
+  - type: textarea
+    id: behaviour
+    attributes:
+      label: What the skill should do
+      description: Inputs, steps, and what it hands back (a report, a commit, a file...).
+    validations:
+      required: true
+  - type: textarea
+    id: triggers
+    attributes:
+      label: Trigger phrases
+      description: What would a user type that should load this skill?
+      placeholder: |
+        - "write release notes for this tag"
+        - "what changed since v1.2"
+  - type: textarea
+    id: tools
+    attributes:
+      label: Tools it needs
+      description: Anything that must be installed (Node, Python, ffmpeg, gh, Playwright...).
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Will you open a PR?
+      options:
+        - "Yes"
+        - "Maybe, with help"
+        - "No"

@@ -1,0 +1,41 @@
+{
+  "name": "shipkit",
+  "displayName": "ShipKit",
+  "description": "24 production-ready Claude Code skills that act like a senior dev team: review-branch, fix-bug, build-story, test-branch, groom-issue (scoring and milestone briefs), deliver-issue, audit-app (QA + UX), find-ux-gaps, grill-feature, refactor (code smells, refactoring mechanics and design-pattern scoring), simplify-code, trim-comments, enforce-clean-architecture, deploy-to-vps (with honest health checks), add-mcp-server (connect your app to Claude and ChatGPT), boost-seo, price-product, make-video, make-demo, write-user-guide, write-plainly, find-shared-code, show-usage and fill-timesheet. Stack-neutral; Windows, macOS and Linux.",
+  "version": "1.0.0",
+  "author": {
+    "name": "ShipKit",
+    "url": "https://github.com/parvez-ahammed/shipkit"
+  },
+  "homepage": "https://parvez-ahammed.github.io/shipkit/",
+  "repository": "https://github.com/parvez-ahammed/shipkit",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "claude-code-plugin",
+    "claude-code-skills",
+    "agent-skills",
+    "claude-skills",
+    "ai-coding",
+    "code-review",
+    "bug-fixing",
+    "refactoring",
+    "design-patterns",
+    "clean-architecture",
+    "qa",
+    "ux-audit",
+    "testing",
+    "deployment",
+    "vps",
+    "mcp",
+    "model-context-protocol",
+    "ci-cd",
+    "seo",
+    "video",
+    "documentation",
+    "issue-grooming",
+    "project-management",
+    "pricing",
+    "code-simplification"
+  ]
+}

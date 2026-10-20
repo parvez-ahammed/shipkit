@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShipKit | Claude Code skills to review, fix and ship code</title>
+<meta name="description" content="ShipKit is a free, open-source Claude Code plugin: 24 skills that review branches, fix bugs, audit QA and UX, refactor, deploy and write docs. MIT licensed.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://parvez-ahammed.github.io/shipkit/">
+<meta name="author" content="ShipKit contributors">
+<meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14130f" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23d97757'/%3E%3Cpath d='M14 22l12 10-12 10' fill='none' stroke='%23fff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M32 44h18' stroke='%23fff' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ShipKit">
+<meta property="og:title" content="ShipKit | Claude Code skills to review, fix and ship code">
+<meta property="og:description" content="A free, open-source Claude Code plugin: 24 skills that review branches, fix bugs, audit QA and UX, refactor, deploy and write docs.">
+<meta property="og:url" content="https://parvez-ahammed.github.io/shipkit/">
+<meta property="og:image" content="https://parvez-ahammed.github.io/shipkit/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="ShipKit - 24 Claude Code skills that review, fix, test and ship your code">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ShipKit | Claude Code skills to review, fix and ship code">
+<meta name="twitter:description" content="A free, open-source Claude Code plugin: 24 skills that review branches, fix bugs, audit QA and UX, refactor, deploy and write docs.">
+<meta name="twitter:image" content="https://parvez-ahammed.github.io/shipkit/og.png">
+<meta name="twitter:image:alt" content="ShipKit - 24 Claude Code skills that review, fix, test and ship your code">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://parvez-ahammed.github.io/shipkit/#org",
+      "name": "ShipKit",
+      "url": "https://parvez-ahammed.github.io/shipkit/",
+      "sameAs": ["https://github.com/parvez-ahammed/shipkit"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://parvez-ahammed.github.io/shipkit/#website",
+      "name": "ShipKit",
+      "url": "https://parvez-ahammed.github.io/shipkit/",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://parvez-ahammed.github.io/shipkit/#org" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://parvez-ahammed.github.io/shipkit/#webpage",
+      "url": "https://parvez-ahammed.github.io/shipkit/",
+      "name": "ShipKit | Claude Code skills to review, fix and ship code",
+      "description": "ShipKit is a free, open-source Claude Code plugin: 24 skills that review branches, fix bugs, audit QA and UX, refactor, deploy and write docs. MIT licensed.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://parvez-ahammed.github.io/shipkit/#website" },
+      "primaryImageOfPage": "https://parvez-ahammed.github.io/shipkit/og.png",
+      "mainEntity": { "@id": "https://parvez-ahammed.github.io/shipkit/#software" }
+    },
+    {
+      "@type": ["SoftwareSourceCode", "SoftwareApplication"],
+      "@id": "https://parvez-ahammed.github.io/shipkit/#software",
+      "name": "ShipKit",
+      "url": "https://parvez-ahammed.github.io/shipkit/",
+      "codeRepository": "https://github.com/parvez-ahammed/shipkit",
+      "description": "ShipKit is a free, open-source plugin for Claude Code that adds 24 skills and 2 git hooks. The skills review branches, fix bugs from the root cause, test the running app, audit QA and UX, guide refactoring, deploy to a VPS, add an MCP server for Claude and ChatGPT, improve SEO and write videos, demos and user guides. It works on any stack, on Windows, macOS and Linux.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "license": "https://opensource.org/licenses/MIT",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@id": "https://parvez-ahammed.github.io/shipkit/#org" },
+      "publisher": { "@id": "https://parvez-ahammed.github.io/shipkit/#org" },
+      "mainEntityOfPage": { "@id": "https://parvez-ahammed.github.io/shipkit/#webpage" },
+      "image": "https://parvez-ahammed.github.io/shipkit/og.png",
+      "featureList": [
+        "groom-issue: scores a ticket's readiness against a rubric, finds gaps and undeclared blockers, and rewrites it into a buildable plan only after you confirm",
+        "deliver-issue: delivers one issue or a whole milestone end to end",
+        "price-product: pricing tiers, margin-safety per tier, competitor prices with cited sources, value metric, and a check of every price surface for contradictions",
+        "simplify-code: removes over-engineering in one behavior-preserving change set",
+        "trim-comments: deletes comments that restate the code or narrate history and keeps the ones that explain a non-obvious why",
+        "review-branch: multi-seat code review of a branch or pull request",
+        "fix-bug: root cause proven before any fix, with a regression test",
+        "build-story: one user story from requirement analysis to verified code",
+        "test-branch: tests a branch against the real running app with an HTML report",
+        "grill-feature: checks whether a shipped feature's promise holds in the code",
+        "audit-app: QA release report and UX audit of a running web app",
+        "find-ux-gaps: parallel UX auditors that turn findings into tickets",
+        "refactor: finds code smells, gives safe refactoring mechanics, and scores design patterns against your code",
+        "enforce-clean-architecture: Clean / Hexagonal architecture rulebook and layering guard",
+        "find-shared-code: finds what is worth sharing across a backlog",
+        "deploy-to-vps: push-to-deploy CI/CD to a VPS with Caddy HTTPS, hardening and honest health checks",
+        "add-mcp-server: adds a read-only MCP server so the owner can ask Claude or ChatGPT about their own data",
+        "boost-seo: SEO and AEO audit and fixes, proven with local tests",
+        "make-video: promo and explainer videos built from code, rendered to MP4",
+        "make-demo: pixel-exact clickable HTML demo captured from your running app",
+        "write-user-guide: end-user feature guide as HTML and PDF, checked against the code",
+        "write-plainly: plain-English house style for commits, PRs, comments and docs",
+        "show-usage: active time, tokens and cost per project from local transcripts",
+        "fill-timesheet: reconstructs past work as paste-ready timesheet rows",
+        "secret-hygiene hook: blocks a commit that adds a secret",
+        "safe-commit hook: commit-message validator"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://parvez-ahammed.github.io/shipkit/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a Claude Code skill?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A skill is a folder with a SKILL.md file, plus optional references and scripts, that teaches Claude Code how to do one kind of task. Claude Code reads the short description of each installed skill and loads the full instructions only when your request matches it." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I install only one skill?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Each skill is a self-contained folder. Copy plugins/shipkit/skills/<name> from the repository into ~/.claude/skills/<name> (or into .claude/skills/ inside a project) and restart Claude Code. A skill installed this way is invoked as /<name> instead of /shipkit:<name>." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does ShipKit work on Windows?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. ShipKit works on Windows, macOS and Linux. Where a helper script depends on the shell, there is a bash version and a PowerShell version." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is ShipKit free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. ShipKit is free and open source under the MIT license. You need Claude Code itself to run the skills." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I contribute?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Open an issue or a pull request on the GitHub repository at github.com/parvez-ahammed/shipkit. Bug reports, fixes to existing skills and new skills are welcome." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+:root{
+  --bg:#f7f5f0; --surface:#ffffff; --surface-2:#efece4; --text:#1c1b17; --muted:#57534a;
+  --border:#d9d4c7; --accent:#b4532f; --accent-ink:#ffffff; --code-bg:#1c1b17; --code-text:#f2efe6;
+  --focus:#1f5fbf; --radius:12px;
+  --mono:ui-monospace,SFMono-Regular,"Cascadia Code",Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14130f; --surface:#1d1c17; --surface-2:#26241e; --text:#efece4; --muted:#b2ad9f;
+    --border:#3a372e; --accent:#e58a63; --accent-ink:#14130f; --code-bg:#0c0b09; --code-text:#efece4;
+    --focus:#8ab4ff; color-scheme:dark;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--sans)}
+a{color:var(--accent);text-underline-offset:2px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+code{font-family:var(--mono);font-size:.92em;background:var(--surface-2);padding:.1em .35em;border-radius:5px;overflow-wrap:anywhere}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--surface);color:var(--text);padding:8px 12px;border-radius:8px;z-index:10}
+.skip:focus{left:8px}
+
+header.site{border-bottom:1px solid var(--border)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.1rem;color:var(--text);text-decoration:none}
+.brand svg{flex:none}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px 18px;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:.95rem}
+nav a:hover{color:var(--text);text-decoration:underline}
+
+.hero{padding:56px 0 40px}
+.eyebrow{font-family:var(--mono);font-size:.85rem;color:var(--muted);margin:0 0 12px}
+h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 18px;max-width:20ch}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:62ch;margin:0 0 28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font-weight:600;text-decoration:none;border:1px solid var(--border);color:var(--text);background:var(--surface)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.facts{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:28px 0 0}
+.facts li{font-size:.85rem;border:1px solid var(--border);border-radius:999px;padding:4px 12px;color:var(--muted)}
+
+section{padding:48px 0;border-top:1px solid var(--border)}
+h2{font-size:clamp(1.5rem,3.5vw,2rem);line-height:1.2;margin:0 0 12px;letter-spacing:-.01em}
+h3{font-size:1.15rem;margin:28px 0 12px}
+.sub{color:var(--muted);max-width:65ch;margin:0 0 24px}
+
+.term{background:var(--code-bg);color:var(--code-text);border-radius:var(--radius);padding:8px;max-width:720px}
+.line{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px}
+.line + .line{border-top:1px solid #ffffff1a}
+.line pre{margin:0;flex:1;min-width:0;overflow-x:auto;font:15px/1.5 var(--mono)}
+.line code{background:none;padding:0;color:inherit;font-size:1em}
+.line pre::before{content:"> ";color:#e58a63}
+.copy{flex:none;font:600 .8rem var(--sans);background:transparent;color:var(--code-text);border:1px solid #ffffff40;border-radius:6px;padding:6px 10px;cursor:pointer}
+.copy:hover{background:#ffffff14}
+.copy:focus-visible{outline-color:#8ab4ff}
+ol.steps{padding-left:1.3em;max-width:70ch}
+ol.steps li{margin:0 0 10px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px;list-style:none;margin:0;padding:0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.card h3,.card h4{margin:0 0 6px;font:600 1rem var(--mono);overflow-wrap:anywhere}
+.card h3 a,.card h4 a{color:var(--text);text-decoration:none}
+.card h3 a:hover,.card h4 a:hover{color:var(--accent);text-decoration:underline}
+.card p{margin:0;color:var(--muted);font-size:.95rem}
+.cmd{display:inline-block;margin-top:10px;font:.82rem var(--mono);color:var(--accent);background:var(--surface-2);border-radius:6px;padding:2px 8px}
+
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.panel h3{margin-top:0}
+.panel p{margin:0 0 10px}
+
+details{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);margin:0 0 10px;max-width:780px}
+summary{cursor:pointer;padding:14px 18px;list-style-position:outside}
+summary h3{display:inline;font-size:1.05rem;margin:0}
+details p{margin:0;padding:0 18px 16px;color:var(--muted)}
+
+footer{border-top:1px solid var(--border);padding:28px 0 40px;color:var(--muted);font-size:.92rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between}
+footer p{margin:0}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="ShipKit home">
+      <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#d97757"/><path d="M14 22l12 10-12 10" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 44h18" stroke="#fff" stroke-width="6" stroke-linecap="round"/></svg>
+      ShipKit
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#hooks">Hooks</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="https://github.com/parvez-ahammed/shipkit">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+    <section class="hero" aria-labelledby="hero-title" style="border-top:0">
+      <p class="eyebrow">Open-source plugin for Claude Code</p>
+      <h1 id="hero-title">Claude Code skills that review, fix, test and <em>ship</em> your code</h1>
+      <p class="lede" id="what-is">ShipKit is a free, open-source plugin for Claude Code that adds 24 skills and 2 git hooks. The skills review branches, fix bugs from the root cause, test the running app, audit QA and UX, guide refactoring, deploy to a VPS, add an MCP server for Claude and ChatGPT, improve SEO and write videos, demos and user guides. It works on any stack, on Windows, macOS and Linux.</p>
+      <div class="cta">
+        <a class="btn primary" href="#install">Install in two commands</a>
+        <a class="btn" href="https://github.com/parvez-ahammed/shipkit">View on GitHub</a>
+      </div>
+      <ul class="facts" aria-label="Key facts">
+        <li>24 skills</li>
+        <li>2 git hooks</li>
+        <li>MIT license</li>
+        <li>Any stack</li>
+        <li>Windows, macOS, Linux</li>
+      </ul>
+    </section>
+  </div>
+
+  <section id="install" aria-labelledby="install-title">
+    <div class="wrap">
+      <h2 id="install-title">How do I install ShipKit?</h2>
+      <p class="sub">Run these two commands inside Claude Code.</p>
+      <div class="term" role="group" aria-label="Install commands">
+        <div class="line"><pre><code id="cmd1">/plugin marketplace add parvez-ahammed/shipkit</code></pre><button class="copy" type="button" data-copy="cmd1" aria-label="Copy the marketplace add command">Copy</button></div>
+        <div class="line"><pre><code id="cmd2">/plugin install shipkit@shipkit</code></pre><button class="copy" type="button" data-copy="cmd2" aria-label="Copy the plugin install command">Copy</button></div>
+      </div>
+      <ol class="steps">
+        <li>Add the marketplace: <code>/plugin marketplace add parvez-ahammed/shipkit</code></li>
+        <li>Install the plugin: <code>/plugin install shipkit@shipkit</code></li>
+        <li>Ask for what you need in plain words, or run a skill directly, for example <code>/shipkit:review-branch</code>.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-title">
+    <div class="wrap">
+      <h2 id="skills-title">What skills are in ShipKit?</h2>
+      <p class="sub">24 skills in seven groups. Each card shows the slash command. Select a name to read its <code>SKILL.md</code> on GitHub.</p>
+
+      <h3 id="review-fix">Review and fix</h3>
+      <ul class="grid">
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/review-branch/SKILL.md">review-branch</a></h4><p>Multi-seat code review of a branch or PR: backend, frontend, architecture, tests, QA and text seats. Every finding survives a refutation pass; you get one ranked punch list and an HTML report.</p><span class="cmd">/shipkit:review-branch</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/fix-bug/SKILL.md">fix-bug</a></h4><p>One bug end to end: reproduce, prove the root cause before any fix, write a regression test that fails without the fix, verify.</p><span class="cmd">/shipkit:fix-bug</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/build-story/SKILL.md">build-story</a></h4><p>One user story or ticket from raw ask to review-ready code: skeptical requirement analysis, task breakdown, implement, test, verify.</p><span class="cmd">/shipkit:build-story</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/test-branch/SKILL.md">test-branch</a></h4><p>Tests a branch against the real running app, not the diff: seeds data, drives the API and browser, and writes an HTML report with screenshots.</p><span class="cmd">/shipkit:test-branch</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/grill-feature/SKILL.md">grill-feature</a></h4><p>Interrogates shipped features at the promise level and answers from the code with <code>file:line</code> evidence.</p><span class="cmd">/shipkit:grill-feature</span></li>
+      </ul>
+
+      <h3 id="plan-deliver">Plan and deliver</h3>
+      <ul class="grid">
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/groom-issue/SKILL.md">groom-issue</a></h4><p>Scores a ticket's readiness against a rubric, finds gaps and undeclared blockers, and rewrites it into a buildable plan only after you confirm. Brief mode gives an executive brief of a milestone in build order.</p><span class="cmd">/shipkit:groom-issue</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/deliver-issue/SKILL.md">deliver-issue</a></h4><p>Delivers one issue or a whole milestone end to end: groom, plan, build, review, test, ship. Pushing, PRs and merges wait for your yes.</p><span class="cmd">/shipkit:deliver-issue</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/price-product/SKILL.md">price-product</a></h4><p>Pricing tiers, margin-safety per tier, competitor prices with cited sources, value metric, and a check of every price surface for contradictions.</p><span class="cmd">/shipkit:price-product</span></li>
+      </ul>
+
+      <h3 id="qa-ux">QA and UX</h3>
+      <ul class="grid">
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/audit-app/SKILL.md">audit-app</a></h4><p>Pressure-tests a running web app: a QA release report and a six-persona UX audit, as two cross-linked HTML reports with screenshot evidence.</p><span class="cmd">/shipkit:audit-app</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/find-ux-gaps/SKILL.md">find-ux-gaps</a></h4><p>Parallel read-only UX auditors triage findings into evidence-backed tickets, filed to GitHub, GitLab, Jira or Azure DevOps only after you confirm.</p><span class="cmd">/shipkit:find-ux-gaps</span></li>
+      </ul>
+
+      <h3 id="refactor-architecture">Refactor and architecture</h3>
+      <ul class="grid">
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/refactor/SKILL.md">refactor</a></h4><p>Finds the 22 classic code smells, gives Martin Fowler's safe refactoring mechanics, and scores creational, structural and behavioral design patterns against your code: APPLY, CONSIDER or REJECT with evidence.</p><span class="cmd">/shipkit:refactor</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/enforce-clean-architecture/SKILL.md">enforce-clean-architecture</a></h4><p>Clean / Hexagonal architecture rulebook, bootstrap for .NET, TypeScript, Java, Go and Python, and a layering guard.</p><span class="cmd">/shipkit:enforce-clean-architecture</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/find-shared-code/SKILL.md">find-shared-code</a></h4><p>Finds what is worth sharing across a backlog with DRY, KISS and YAGNI judgment, and what to resist abstracting.</p><span class="cmd">/shipkit:find-shared-code</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/simplify-code/SKILL.md">simplify-code</a></h4><p>Removes over-engineering in one behavior-preserving change set: dead code, needless layers, reinvented helpers. Verified by your own build and tests.</p><span class="cmd">/shipkit:simplify-code</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/trim-comments/SKILL.md">trim-comments</a></h4><p>Deletes comments that restate the code or narrate history and keeps the ones that explain a non-obvious why. Comment-only, gate-verified.</p><span class="cmd">/shipkit:trim-comments</span></li>
+      </ul>
+
+      <h3 id="ship-operate">Ship and operate</h3>
+      <ul class="grid">
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/deploy-to-vps/SKILL.md">deploy-to-vps</a></h4><p>Push-to-deploy CI/CD for a containerized app to a VPS: GitHub Actions, Caddy automatic HTTPS, DNS, OAuth redirects, baseline hardening and health checks that report real readiness.</p><span class="cmd">/shipkit:deploy-to-vps</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/add-mcp-server/SKILL.md">add-mcp-server</a></h4><p>Adds an MCP server to your app so its owner can ask Claude or ChatGPT about their own data: read-only tools on your own report queries, scoped API keys and OAuth 2.1 sign-in.</p><span class="cmd">/shipkit:add-mcp-server</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/boost-seo/SKILL.md">boost-seo</a></h4><p>SEO and AEO audit and fixes: meta tags, JSON-LD, robots.txt, sitemap, llms.txt and SPA prerendering, proven with local tests.</p><span class="cmd">/shipkit:boost-seo</span></li>
+      </ul>
+
+      <h3 id="create-document">Create and document</h3>
+      <ul class="grid">
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/make-video/SKILL.md">make-video</a></h4><p>Promo, explainer and social videos built entirely from code, rendered to MP4 with voice-over, music, captions and a thumbnail.</p><span class="cmd">/shipkit:make-video</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/make-demo/SKILL.md">make-demo</a></h4><p>Pixel-exact clickable HTML demo of a planned workflow, captured from your real running app.</p><span class="cmd">/shipkit:make-demo</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/write-user-guide/SKILL.md">write-user-guide</a></h4><p>End-user feature guide for a ticket or PR as HTML and PDF; a fresh agent checks every claim against the code.</p><span class="cmd">/shipkit:write-user-guide</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/write-plainly/SKILL.md">write-plainly</a></h4><p>A plain-English house style for commits, PR descriptions, code comments and docs.</p><span class="cmd">/shipkit:write-plainly</span></li>
+      </ul>
+
+      <h3 id="insight">Insight</h3>
+      <ul class="grid">
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/show-usage/SKILL.md">show-usage</a></h4><p>Active time, sessions, tokens and cost per project, from your local Claude Code transcripts.</p><span class="cmd">/shipkit:show-usage</span></li>
+        <li class="card"><h4><a href="https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/fill-timesheet/SKILL.md">fill-timesheet</a></h4><p>Reconstructs what you worked on for past dates, as paste-ready timesheet rows.</p><span class="cmd">/shipkit:fill-timesheet</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="how-it-works" aria-labelledby="how-title">
+    <div class="wrap">
+      <h2 id="how-title">How does ShipKit work?</h2>
+      <p class="sub">Every skill has a description that says when to use it. You can let Claude Code pick the skill, or pick it yourself.</p>
+      <div class="two">
+        <div class="panel">
+          <h3>It triggers on its own</h3>
+          <p>Claude Code reads each skill's description. When your request matches, it loads that skill. Say "review my PR before I open it" and <code>review-branch</code> runs. Three skills run only as commands: <code>deliver-issue</code>, <code>show-usage</code> and <code>fill-timesheet</code>.</p>
+        </div>
+        <div class="panel">
+          <h3>Or run it explicitly</h3>
+          <p>Type the slash command to run one skill directly: <code>/shipkit:&lt;skill&gt;</code>, for example <code>/shipkit:fix-bug</code>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hooks" aria-labelledby="hooks-title">
+    <div class="wrap">
+      <h2 id="hooks-title">What git hooks are included?</h2>
+      <p class="sub">Two git hooks for checks that must run on every commit. Install them per repository; each hook's README has the steps.</p>
+      <ul class="grid">
+        <li class="card"><h3><a href="https://github.com/parvez-ahammed/shipkit/tree/master/hooks/secret-hygiene">secret-hygiene</a></h3><p>Blocks a commit that adds a secret. Uses gitleaks when it is installed, with a regex fallback.</p></li>
+        <li class="card"><h3><a href="https://github.com/parvez-ahammed/shipkit/tree/master/hooks/safe-commit">safe-commit</a></h3><p>Commit-message validator: conventional subject, length and stray <code>@</code> lines.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <h2 id="faq-title">Frequently asked questions</h2>
+      <details open>
+        <summary><h3>What is a Claude Code skill?</h3></summary>
+        <p>A skill is a folder with a SKILL.md file, plus optional references and scripts, that teaches Claude Code how to do one kind of task. Claude Code reads the short description of each installed skill and loads the full instructions only when your request matches it.</p>
+      </details>
+      <details>
+        <summary><h3>Can I install only one skill?</h3></summary>
+        <p>Yes. Each skill is a self-contained folder. Copy plugins/shipkit/skills/&lt;name&gt; from the repository into ~/.claude/skills/&lt;name&gt; (or into .claude/skills/ inside a project) and restart Claude Code. A skill installed this way is invoked as /&lt;name&gt; instead of /shipkit:&lt;name&gt;.</p>
+      </details>
+      <details>
+        <summary><h3>Does ShipKit work on Windows?</h3></summary>
+        <p>Yes. ShipKit works on Windows, macOS and Linux. Where a helper script depends on the shell, there is a bash version and a PowerShell version.</p>
+      </details>
+      <details>
+        <summary><h3>Is ShipKit free?</h3></summary>
+        <p>Yes. ShipKit is free and open source under the MIT license. You need Claude Code itself to run the skills.</p>
+      </details>
+      <details>
+        <summary><h3>How do I contribute?</h3></summary>
+        <p>Open an issue or a pull request on the GitHub repository at <a href="https://github.com/parvez-ahammed/shipkit">github.com/parvez-ahammed/shipkit</a>. Bug reports, fixes to existing skills and new skills are welcome.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>ShipKit is built in the open by its contributors. MIT license.</p>
+    <p><a href="https://github.com/parvez-ahammed/shipkit">Source on GitHub</a> · <a href="https://github.com/parvez-ahammed/shipkit/blob/master/LICENSE">License</a> · <a href="llms.txt">llms.txt</a></p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.copy').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var t = document.getElementById(b.dataset.copy).textContent;
+    if (!navigator.clipboard) return;
+    navigator.clipboard.writeText(t).then(function () {
+      b.textContent = 'Copied';
+      setTimeout(function () { b.textContent = 'Copy'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

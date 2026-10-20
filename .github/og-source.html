@@ -1,0 +1,59 @@
+<!doctype html>
+<!-- Source of docs/og.png and .github/social-preview.png. Render steps are in CONTRIBUTING.md. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ShipKit social preview</title>
+<style>
+:root{
+  --bg:#14130f; --text:#efece4; --muted:#b2ad9f; --border:#3a372e;
+  --accent:#e58a63; --logo:#d97757; --chip:#26241e; --code-bg:#0c0b09;
+  --mono:"Cascadia Code","Cascadia Mono",Consolas,ui-monospace,monospace;
+  --sans:"Segoe UI Variable Display","Segoe UI",system-ui,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:1280px;height:640px;overflow:hidden}
+body{
+  background:
+    radial-gradient(900px 520px at 100% 0%, #e58a6333, transparent 60%),
+    radial-gradient(700px 480px at 0% 100%, #d9775722, transparent 60%),
+    linear-gradient(#ffffff08 1px, transparent 1px) 0 0/40px 40px,
+    linear-gradient(90deg, #ffffff08 1px, transparent 1px) 0 0/40px 40px,
+    var(--bg);
+  color:var(--text);font-family:var(--sans);
+  padding:64px 80px;position:relative;
+}
+.brand{display:flex;align-items:center;gap:28px}
+.brand svg{filter:drop-shadow(0 10px 30px #d9775766)}
+.brand h1{margin:0;font-size:112px;line-height:1;font-weight:800;letter-spacing:-3px}
+.brand h1 span{color:var(--accent)}
+.tag{margin:40px 0 0;font-size:46px;line-height:1.2;font-weight:400;max-width:900px}
+.tag b{font-weight:800}
+.chips{display:flex;gap:12px;margin-top:34px}
+.chip{font:600 20px var(--mono);background:var(--chip);border:1px solid var(--border);border-radius:10px;padding:9px 16px;color:var(--text)}
+.chip i{font-style:normal;color:var(--accent)}
+.term{position:absolute;left:80px;bottom:56px;background:var(--code-bg);border:2px solid var(--logo);border-radius:14px;padding:14px 24px;font:500 24px/1.55 var(--mono)}
+.term div::before{content:"> ";color:var(--accent);font-weight:700}
+.meta{position:absolute;right:80px;bottom:62px;text-align:right;color:var(--muted);font-size:22px;line-height:1.6}
+.meta b{color:var(--text);font-weight:600}
+</style>
+</head>
+<body>
+  <div class="brand">
+    <svg width="120" height="120" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#d97757"/><path d="M14 22l12 10-12 10" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 44h18" stroke="#fff" stroke-width="6" stroke-linecap="round"/></svg>
+    <h1>Ship<span>Kit</span></h1>
+  </div>
+  <p class="tag"><b>24 Claude Code skills</b> that review, fix, test and ship your code.</p>
+  <div class="chips">
+    <span class="chip"><i>/shipkit:</i>review-branch</span>
+    <span class="chip"><i>/shipkit:</i>fix-bug</span>
+    <span class="chip"><i>/shipkit:</i>audit-app</span>
+    <span class="chip"><i>/shipkit:</i>add-mcp-server</span>
+  </div>
+  <div class="term">
+    <div>/plugin marketplace add parvez-ahammed/shipkit</div>
+    <div>/plugin install shipkit@shipkit</div>
+  </div>
+  <div class="meta"><b>+ 2 git hooks</b><br>Free &middot; MIT license<br>Windows, macOS, Linux</div>
+</body>
+</html>

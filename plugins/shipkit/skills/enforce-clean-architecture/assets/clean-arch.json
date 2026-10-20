@@ -1,0 +1,105 @@
+{
+  "//": "Clean Architecture guard config. Copy to your repo root, edit roots + forbidden. 'roots' are directory paths (scanned recursively). 'forbidden' are regexes tested (case-insensitive) against import-ish lines in that layer; npm and Go module names are quoted so that e.g. express does not also match ./expressions. Defaults cover .NET, Node/TS (including I/O builtins like fs/http and DB drivers), Java, Go and Python; rename roots and the ../infra-style relative patterns to match your folder names. 'dotnet' (optional) declares the allowed .csproj reference DAG, keyed by a suffix of the project name.",
+  "fileExtensions": [
+    ".cs",
+    ".ts",
+    ".tsx",
+    ".js",
+    ".jsx",
+    ".mjs",
+    ".cjs",
+    ".java",
+    ".kt",
+    ".go",
+    ".py"
+  ],
+  "importLineRegex": "^\\s*(global\\s+)?(using|import|from|require|#include|use)\\b|\\brequire\\s*\\(|^\\s*([\\w.]+\\s+)?\"[^\"]+\"\\s*$",
+  "layers": [
+    {
+      "name": "domain",
+      "roots": [
+        "src/Domain",
+        "Domain",
+        "src/domain",
+        "src/core/domain"
+      ],
+      "forbidden": [
+        "EntityFrameworkCore",
+        "Microsoft\\.AspNetCore",
+        "Npgsql",
+        "Hangfire",
+        "[\"'](express|fastify|axios|stripe|aws-sdk)[\"'/]",
+        "[\"']@nestjs/",
+        "[\"']@aws-sdk/",
+        "org\\.springframework",
+        "jakarta\\.persistence",
+        "\"database/sql\"",
+        "\"net/http\"",
+        "\\.Application",
+        "\\.Infrastructure",
+        "[\"'](node:)?(fs|fs/promises|http|https|net|child_process|dgram)[\"']",
+        "[\"'](pg|mysql2?|mongoose|mongodb|sqlite3|better-sqlite3|redis|ioredis|knex|sequelize|typeorm)[\"'/]",
+        "[\"']@prisma/",
+        "^\\s*(from|import)\\s+(sqlalchemy|django|flask|fastapi|requests|httpx|boto3|psycopg2?)\\b",
+        "\\.\\./(application|infrastructure|infra|adapters|persistence|db)\\b"
+      ]
+    },
+    {
+      "name": "application",
+      "roots": [
+        "src/Application",
+        "Application",
+        "src/application"
+      ],
+      "forbidden": [
+        "EntityFrameworkCore",
+        "Microsoft\\.AspNetCore",
+        "Npgsql",
+        "[\"'](express|fastify|axios)[\"'/]",
+        "[\"']@nestjs/platform",
+        "\\.Infrastructure",
+        "[\"'](node:)?(fs|fs/promises|http|https|net|child_process|dgram)[\"']",
+        "[\"'](pg|mysql2?|mongoose|mongodb|sqlite3|better-sqlite3|redis|ioredis|knex|sequelize|typeorm)[\"'/]",
+        "[\"']@prisma/",
+        "^\\s*(from|import)\\s+(sqlalchemy|django|flask|fastapi|requests|httpx|boto3|psycopg2?)\\b",
+        "\\.\\./(infrastructure|infra|adapters|persistence|db)\\b"
+      ]
+    },
+    {
+      "name": "infrastructure",
+      "roots": [
+        "src/Infrastructure",
+        "Infrastructure",
+        "src/infrastructure",
+        "src/infra",
+        "src/adapters"
+      ],
+      "forbidden": [
+        "Microsoft\\.AspNetCore\\.Mvc",
+        "\\.Controllers",
+        "\\.\\./presentation",
+        "\\.\\./api"
+      ]
+    }
+  ],
+  "dotnet": {
+    "Domain": [],
+    "Application": [
+      "Domain"
+    ],
+    "Infrastructure": [
+      "Domain",
+      "Application"
+    ],
+    "API": [
+      "Domain",
+      "Application",
+      "Infrastructure"
+    ],
+    "Worker": [
+      "Domain",
+      "Application",
+      "Infrastructure"
+    ]
+  }
+}

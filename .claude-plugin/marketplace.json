@@ -1,0 +1,31 @@
+{
+  "name": "shipkit",
+  "owner": {
+    "name": "ShipKit",
+    "url": "https://github.com/parvez-ahammed/shipkit"
+  },
+  "description": "ShipKit: open-source Claude Code skills to review, fix, test, refactor, document and ship software.",
+  "plugins": [
+    {
+      "name": "shipkit",
+      "source": "./plugins/shipkit",
+      "description": "24 production-ready Claude Code skills that act like a senior dev team: review-branch, fix-bug, build-story, test-branch, groom-issue (scoring and milestone briefs), deliver-issue, audit-app (QA + UX), find-ux-gaps, grill-feature, refactor (code smells, refactoring mechanics and design-pattern scoring), simplify-code, trim-comments, enforce-clean-architecture, deploy-to-vps (with honest health checks), add-mcp-server (connect your app to Claude and ChatGPT), boost-seo, price-product, make-video, make-demo, write-user-guide, write-plainly, find-shared-code, show-usage and fill-timesheet. Stack-neutral; Windows, macOS and Linux.",
+      "category": "development",
+      "tags": [
+        "code-review",
+        "debugging",
+        "refactoring",
+        "testing",
+        "qa",
+        "ux",
+        "deployment",
+        "mcp",
+        "seo",
+        "documentation",
+        "video",
+        "project-management",
+        "pricing"
+      ]
+    }
+  ]
+}

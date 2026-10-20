@@ -1,0 +1,12 @@
+* text=auto
+
+# Scripts that run under bash must keep LF, even on Windows checkouts with core.autocrlf.
+*.sh            text eol=lf
+hooks/*/commit-msg  text eol=lf
+hooks/*/pre-commit  text eol=lf
+
+# Binary
+*.png  binary
+*.jpg  binary
+*.svg  text
+*.pdf  binary
