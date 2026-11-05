@@ -57,7 +57,7 @@ Skills trigger on their own when a request matches their description, or run exp
 
 - [make-video](https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/make-video/SKILL.md): promo and explainer videos built from code, rendered to MP4
 - [make-demo](https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/make-demo/SKILL.md): pixel-exact clickable HTML demo captured from your running app
-- [write-user-guide](https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/write-user-guide/SKILL.md): end-user feature guide as HTML and PDF, checked against the code
+- [write-user-guide](https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/write-user-guide/SKILL.md): end-user feature guide as HTML, PDF or Markdown, with optional screenshots, checked against the code
 - [write-plainly](https://github.com/parvez-ahammed/shipkit/blob/master/plugins/shipkit/skills/write-plainly/SKILL.md): plain-English house style for commits, PRs, code comments and docs
 
 ## Insight

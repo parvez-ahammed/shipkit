@@ -107,7 +107,7 @@ You don't need to remember any command. Just ask:
 |-------|--------------|
 | [`make-video`](plugins/shipkit/skills/make-video/SKILL.md) | Promo, explainer and social videos built entirely from code: HTML scenes, local text-to-speech, generated music, captions and thumbnail, rendered to MP4. Every on-screen claim is checked. |
 | [`make-demo`](plugins/shipkit/skills/make-demo/SKILL.md) | Pixel-exact clickable HTML demo of a planned workflow, captured from your real running app. |
-| [`write-user-guide`](plugins/shipkit/skills/write-user-guide/SKILL.md) | End-user feature guide for a ticket or PR as HTML + PDF; a fresh agent checks every claim against the code. |
+| [`write-user-guide`](plugins/shipkit/skills/write-user-guide/SKILL.md) | End-user feature guide for a ticket or PR as HTML + PDF or Markdown, with or without screenshots; a fresh agent checks every claim against the code. |
 | [`write-plainly`](plugins/shipkit/skills/write-plainly/SKILL.md) | A plain-English house style for commits, PR descriptions, code comments and docs, with a PR-description writer that fills any repo's template. |
 
 ### Insight
@@ -150,7 +150,7 @@ Most skills need nothing but Claude Code. Skills that run bundled tools say so i
 |-------|-------|
 | make-video | Node 22+, `npm ci` in `engine/` (bundles Playwright Chromium and ffmpeg) |
 | make-demo | Python 3.11+, a browser tool (e.g. Playwright MCP); optional .NET 10 for the Windows desktop adapter |
-| write-user-guide | Python 3.11+ with PyMuPDF, Chrome / Chromium / Edge; tracker CLI only if attaching |
+| write-user-guide | Python 3.11+ with PyMuPDF, Chrome / Chromium / Edge; a browser tool and the running app only for screenshots; tracker CLI only if attaching |
 | audit-app, test-branch | the app running locally, a browser tool (e.g. Playwright MCP) |
 | boost-seo, show-usage | Node 22+ |
 | enforce-clean-architecture | PowerShell 7 (`pwsh`, cross-platform) or Windows PowerShell 5.1 for the layering guard |

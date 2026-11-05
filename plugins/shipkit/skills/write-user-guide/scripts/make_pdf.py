@@ -43,6 +43,7 @@ if len(sys.argv) != 3:
 html, pdf = (pathlib.Path(p).resolve() for p in sys.argv[1:3])
 # Remove an old PDF first, so a failed print is not mistaken for success.
 pdf.unlink(missing_ok=True)
+pdf.parent.mkdir(parents=True, exist_ok=True)
 subprocess.run(
     [find_browser(), "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
      f"--print-to-pdf={pdf}", html.as_uri()],
@@ -54,7 +55,9 @@ if not pdf.exists():
 doc = fitz.open(pdf)
 print(f"{pdf.name}: {doc.page_count} pages, {pdf.stat().st_size // 1024} KB")
 for index, page in enumerate(doc):
-    blocks = [b for b in page.get_text("blocks") if b[4].strip()]
+    # Skip the running footer (page numbers) in the bottom margin, or every page reads as full.
+    footer_top = page.rect.height - 54
+    blocks = [b for b in page.get_text("blocks") if b[4].strip() and b[1] < footer_top]
     if not blocks:
         print(f"  page {index + 1}: EMPTY")
         continue
