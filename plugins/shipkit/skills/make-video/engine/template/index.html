@@ -5,10 +5,18 @@
 <link rel="stylesheet" href="brand.css">
 <style>
 /* Styles for this video's own scenes. Use --vm-* colours and calc(var(--u) * N) sizes, never raw values. */
-.chip { display: flex; align-items: center; gap: calc(var(--u) * 12); padding: calc(var(--u) * 14) calc(var(--u) * 22); font-size: calc(var(--u) * 24); font-weight: 600; white-space: nowrap; }
-.chip b { color: var(--vm-error); font-size: calc(var(--u) * 18); }
-.brandname { font-size: calc(var(--u) * 150); font-weight: 700; letter-spacing: -0.03em; color: var(--vm-accent); }
-.sysrow { display: flex; align-items: center; justify-content: space-between; height: calc(var(--u) * 84); padding: 0 calc(var(--u) * 26); border-bottom: 1px solid var(--vm-border); font-size: calc(var(--u) * 24); font-weight: 600; }
+.chip { display: flex; align-items: center; gap: calc(var(--u) * 18); padding: calc(var(--u) * 22) calc(var(--u) * 30); font-size: calc(var(--u) * 44); font-weight: 600; white-space: nowrap; }
+.chip b { color: var(--vm-error); font-size: calc(var(--u) * 32); }
+.mark { display: flex; align-items: center; justify-content: center; gap: calc(var(--u) * 40); }
+.mark img { height: calc(var(--u) * 190); }
+.mark .name { font-size: calc(var(--u) * 170); font-weight: 650; letter-spacing: -0.035em; line-height: 1; }
+.vm-ground .mark img { background: var(--vm-on-ground); border-radius: calc(var(--u) * 46); padding: calc(var(--u) * 10); }
+.panel { overflow: hidden; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; padding: calc(var(--u) * 26) calc(var(--u) * 36); border-bottom: 1px solid var(--vm-border); font-size: calc(var(--u) * 36); font-weight: 600; color: var(--vm-muted); }
+.sysrow { display: flex; align-items: center; justify-content: space-between; height: calc(var(--u) * 116); padding: 0 calc(var(--u) * 36); border-bottom: 1px solid var(--vm-border); font-size: calc(var(--u) * 46); font-weight: 600; }
+.sysrow:last-child { border-bottom: 0; }
+.panel .vm-pill { font-size: calc(var(--u) * 32); }
+.url { font-size: calc(var(--u) * 44); font-weight: 600; color: var(--vm-accent); text-align: center; }
 </style>
 </head>
 <body>
@@ -17,70 +25,88 @@
 <script src="/engine/lib/stage.js"></script>
 <script>
 const portrait = H > W;
-// Short fades and content that starts right at the scene start keep check.mjs's "almost empty frame" rule (max 0.3 s) green.
+const centreRow = (parent, y, html, cls = "") => {
+  const box = at(el("div", cls, parent, html), 0, y);
+  box.style.width = W + "px";
+  return box;
+};
 
-// ---------- hook: the pain ----------
-const hook = scene("hook", { fade: .2 });
-const hookTitle = sayLine(hook.root, H * .2, "hook", { breakAfter: ["data"], highlight: ["hand"] });
-const chips = ["Report_v7_FINAL.xlsx", "RE: FW: numbers", "export (2).csv"].map((name, i) => {
-  const c = el("div", "vm-card chip", hook.root, `${name}<b>${["Out of date", "Conflict", "Which one?"][i]}</b>`);
-  return at(c, portrait ? W * .1 : W * (.08 + .3 * i), portrait ? H * (.45 + i * .1) : H * .6);
+// ---------- hook: the pain, already moving on frame 0 ----------
+const hook = scene("hook");
+const hookTitle = sayLine(hook.root, portrait ? H * .12 : H * .1, "hook", { highlight: ["hand"] });
+const files = [["Report_v7_FINAL.xlsx", "Out of date"], ["RE: FW: numbers", "Conflict"], ["export (2).csv", "Which one?"]];
+const chips = files.map(([name, badge], i) => {
+  const c = el("div", "vm-card chip", hook.root, `${name}<b>${badge}</b>`);
+  return at(c, portrait ? W * .1 : W * (.07 + .3 * i), portrait ? H * (.42 + i * .13) : H * (.5 + (i % 2) * .14));
 });
 onFrame(t => {
   if (!hook.visible(t)) return;
   hookTitle.update(t);
-  chips.forEach((c, i) => pop(c, t, S("hook", .15 + i * .3), { r: Math.sin(t * 2 + i) * 3 }));
-});
-
-// ---------- reveal: logo ----------
-const reveal = scene("reveal", { fade: .2 });
-const logoBox = at(el("div", "", reveal.root), 0, 0);
-Object.assign(logoBox.style, { width: W + "px", height: H + "px", display: "flex", alignItems: "center", justifyContent: "center", gap: 40 * U + "px", flexDirection: portrait ? "column" : "row" });
-const logoImg = el("img", "", logoBox);
-logoImg.src = "assets/logo.svg";
-logoImg.style.height = 170 * U + "px";
-const logoName = el("div", "brandname", logoBox, "Acme");
-onFrame(t => {
-  if (!reveal.visible(t)) return;
-  pop(logoImg, t, S("reveal", .05));
-  const p = ease.out(prog(t, S("reveal", .25), S("reveal", .8)));
-  logoName.style.clipPath = `inset(-10% ${100 - p * 100}% -10% 0)`;
-  place(logoName, { x: (1 - p) * -30 * U, o: p > 0 ? 1 : 0 });
-});
-
-// ---------- feature: explainer column + product card ----------
-const feature = scene("feature", { fade: .2 });
-const col = column(feature.root, {
-  x: portrait ? 90 * U : 130 * U, y: portrait ? 220 * U : 260 * U, width: portrait ? W - 180 * U : 760 * U,
-  eyebrow: "How it works", title: "Every system,<br>always in sync", t0: S("feature", .05),
-  bullets: [["Connects the tools you already use", L("feature", .2)], ["Runs on a schedule", Wd("feature", "automatically")], ["No files, no emails", LE("feature", .4)]],
-});
-const card = at(el("div", "vm-card", feature.root), portrait ? 90 * U : W - 780 * U, portrait ? H * .55 : H * .24);
-card.style.width = (portrait ? W - 180 * U : 640 * U) + "px";
-const systems = ["Sales", "Finance", "Warehouse", "Support"].map(name => {
-  const row = el("div", "sysrow", card, `<span>${name}</span><span class="vm-pill run">Syncing</span>`);
-  return { row, pill: row.lastChild };
-});
-onFrame(t => {
-  if (!feature.visible(t)) return;
-  col(t);
-  pop(card, t, S("feature", .1));
-  systems.forEach((s, i) => {
-    const done = t >= Wd("feature", "sync", .3 + i * .3);
-    s.pill.className = "vm-pill " + (done ? "ok" : "run");
-    s.pill.textContent = done ? "In sync" : "Syncing";
+  const stress = prog(t, E("hook", -1.5), E("hook"));
+  chips.forEach((c, i) => {
+    const d = drift(t, i, 12 * U);
+    pop(c, t, S("hook", -.3 + i * .12), { x: d.x + stress * 7 * U * Math.sin(t * 38 + i), y: d.y, r: Math.sin(t * 1.3 + i) * 3 });
   });
 });
 
-// ---------- call to action (last scene: stays sharp to the end, so the last frame works as a thumbnail) ----------
-const cta = scene("cta", { fade: .2 });
-const ctaTitle = sayLine(cta.root, H * .3, "cta", { highlight: ["today"], size: 96 });
-const ctaBtn = at(el("div", "", cta.root, `<span class="vm-btn">acme.example</span>`), 0, H * .55);
-Object.assign(ctaBtn.style, { width: W + "px", display: "flex", justifyContent: "center" });
+// ---------- turn: the product arrives on its own colour ----------
+const turn = scene("turn");
+turn.root.classList.add("vm-ground");
+const mark = centreRow(turn.root, 0, `<img src="assets/logo.svg"><div class="name">Acme</div>`, "mark");
+Object.assign(mark.style, { height: H + "px", flexDirection: portrait ? "column" : "row" });
+const markImg = mark.querySelector("img"), markName = mark.querySelector(".name");
+onFrame(t => {
+  if (!turn.visible(t)) return;
+  const pIn = ease.soft(prog(t, S("turn"), S("turn", .6)));
+  const creep = lerp(1, 1.03, prog(t, S("turn", .6), E("turn")));
+  place(markImg, { s: lerp(1.6, 1, pIn) * creep, o: clamp(prog(t, S("turn"), S("turn", .12))) });
+  blur(markImg, pIn, 14 * U);
+  const pWord = ease.soft(prog(t, S("turn", .25), S("turn", .85)));
+  markName.style.clipPath = `inset(-10% ${100 - pWord * 100}% -10% 0)`;
+  place(markName, { x: (1 - pWord) * -40 * U, s: creep, o: pWord > 0 ? 1 : 0 });
+});
+
+// ---------- feature: the product card is the hero, the words support it ----------
+const feature = scene("feature");
+const featTitle = sayLine(feature.root, portrait ? H * .1 : H * .08, "feature", { highlight: ["sync"], size: 80 });
+const cardW = portrait ? W - 120 * U : W * .58;
+const panel = at(el("div", "vm-card panel", feature.root), (W - cardW) / 2, portrait ? H * .36 : H * .3);
+panel.style.width = cardW + "px";
+const count = el("span", "vm-pill info", el("div", "panel-head", panel, "<span>Connected systems</span>"));
+const systems = ["Sales", "Finance", "Warehouse", "Support"].map(name => {
+  const row = el("div", "sysrow", panel, `<span>${name}</span><span class="vm-pill run">Syncing</span>`);
+  return row.lastChild;
+});
+onFrame(t => {
+  if (!feature.visible(t)) return;
+  featTitle.update(t);
+  const p = ease.soft(prog(t, S("feature"), S("feature", .5)));
+  const push = lerp(1, 1.05, ease.inOut(prog(t, S("feature", .5), E("feature"))));
+  place(panel, { y: (1 - p) * 40 * U, s: lerp(.94, 1, p) * push, o: clamp(prog(t, S("feature"), S("feature", .15))) });
+  blur(panel, p);
+  let done = 0;
+  systems.forEach((pill, i) => {
+    const ok = t >= Wd("feature", "sync", .2 + i * .28);
+    done += ok;
+    pill.className = "vm-pill " + (ok ? "ok" : "run");
+    pill.textContent = ok ? "In sync" : "Syncing";
+  });
+  count.textContent = `${done} of 4`;
+});
+
+// ---------- call to action: last scene, so it never fades and its last frame is the thumbnail ----------
+const cta = scene("cta");
+const ctaMark = centreRow(cta.root, portrait ? H * .3 : H * .22, `<img src="assets/logo.svg"><div class="name" style="color: var(--vm-accent)">Acme</div>`, "mark");
+const ctaTitle = sayLine(cta.root, portrait ? H * .52 : H * .55, "cta", { highlight: ["today"], size: 72 });
+const url = centreRow(cta.root, portrait ? H * .64 : H * .72, "acme.example", "url");
 onFrame(t => {
   if (!cta.visible(t)) return;
+  const d = drift(t, 7, 4 * U);
+  const p = ease.soft(prog(t, S("cta"), S("cta", .55)));
+  place(ctaMark, { x: d.x, y: d.y, s: lerp(1.25, 1, p), o: clamp(prog(t, S("cta"), S("cta", .12))) });
+  blur(ctaMark, p, 10 * U);
   ctaTitle.update(t);
-  pop(ctaBtn, t, S("cta", .1));
+  rise(url, t, LE("cta", -.2));
 });
 </script>
 </body>

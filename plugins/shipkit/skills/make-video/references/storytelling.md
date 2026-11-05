@@ -42,7 +42,7 @@ For each scene, decide:
 - **Title** (2-5 words, one word highlighted in the brand highlight colour)
 - **Points** (2-4, each under 7 words, appearing when the voice says them: `Wd(line, word)`)
 - **Demonstration** (the moving part that proves the point)
-- **Sound** (a whoosh on the scene change, pops or chimes on the key moments, never more than one sound per 0.3 s)
+- **Sound** (at most 1-3 big hits in the whole film, on visible events; quiet texture like ticks or typing under a moment; never a sound on every cut)
 
 ## Worked example: Acme Sync, 60 s landscape
 
@@ -51,7 +51,7 @@ Product (invented for this example): keeps customer orders in sync between an on
 | Time | Scene | Voice | Demonstration |
 |---|---|---|---|
 | 0-10.6 | problem | "Every team keeps orders in its own tool. So data travels by spreadsheet, and no one knows which copy is right." | 3 team cards with their tool icons; spreadsheets fly between them; file chips get red "Out of date" / "Conflict" badges |
-| 10.6-14 | meet | "Meet Acme Sync." | logo reveal (mark pops, arrows slide in, wordmark wipes in), then it moves to the top-left corner and stays |
+| 10.6-14 | meet | "Acme Sync fixes that." | the frame fills with the brand colour; the logo arrives big and settles, then shrinks into the title bar of the shop window in the next scene |
 | 14-22 | full | "It moves complete orders between your systems. Customers, items and prices." | two app windows; order rows move one by one from the shop to the accounting tool; "Customers" and "Prices" chips move across on the spoken words |
 | 22-28.8 | codes | "Codes are translated on the way, so both sides speak the same language." | 3-column mapping: `SHP-EXP` -> "Express shipping" (shared term) -> `EXPR` |
 | 28.8-36.4 | setup | "Connect your tools once. Choose what to sync, and how often." | the form types itself field by field; a cursor clicks "Start sync"; Draft -> Active |

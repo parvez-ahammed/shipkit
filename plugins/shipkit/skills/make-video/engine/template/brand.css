@@ -20,6 +20,8 @@
   --vm-cta-ink: #ffffff;
   --vm-success: #0f9d58;       /* status only */
   --vm-error: #d93025;         /* status only */
+  --vm-ground: #3d5afe;        /* a whole scene filled with the brand colour, for the turn and one other break */
+  --vm-on-ground: #ffffff;     /* text on that ground, 4.5:1 or more */
   --vm-caption-bg: rgba(20, 20, 43, .88);
   --vm-caption-ink: #ffffff;
   --vm-radius: calc(var(--u) * 22);

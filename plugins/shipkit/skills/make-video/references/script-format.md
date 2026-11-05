@@ -10,7 +10,7 @@
              "endAt": "scene:cta+0.3", "layers": { "kick": "scene:features" }, "mix": 0.5 },
   "scenes": [
     { "id": "hook", "lines": [{ "id": "hook", "say": "Still copying data by hand?" }] },
-    { "id": "reveal", "min": 2.8, "lead": 0.8, "lines": [{ "id": "meet", "say": "Meet Acme." }] },
+    { "id": "reveal", "min": 2.8, "lead": 0.8, "lines": [{ "id": "meet", "say": "Acme does it for you." }] },
     { "id": "features", "weight": 2, "hold": 1.2, "lines": [{ "id": "f1", "say": "...", "caption": "optional different caption text" }] }
   ],
   "sfx": [{ "type": "pop", "at": "word:f1:prices" }, { "type": "typing", "at": "scene:setup+1", "until": "scene:setup+2.4" }]

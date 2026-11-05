@@ -22,7 +22,8 @@ Engine: the `engine/` folder next to this SKILL.md, i.e. `${CLAUDE_SKILL_DIR}/en
 - `dist/<name>-<W>x<H>.mp4` (H.264 + AAC, -14 LUFS, faststart), `dist/thumbnail.png` (last frame),
   `dist/captions.srt`, `dist/report.json` (measured length, frames, loudness, empty frames, smallest text, words to listen for)
 - `claims.md` in the project: every spoken line and on-screen claim with its source
-- A storyboard table and an honest list of what they must check before publishing (see step 9)
+- `direction.md` in the project: the look, the beats and the first and last frame, in about 150 words
+- A storyboard table and an honest list of what they must check before publishing (see step 10)
 
 ## One-time setup
 
@@ -80,17 +81,25 @@ and a blurred copy puts ghost headlines at the top and bottom of the frame.
 ### 4. Write the story and the script
 
 Read `references/storytelling.md` for structures and a worked 60 s example. The short version:
-- Hook with the viewer's pain in the first 3 s, then the product, then 3-5 concrete things it does, then proof or benefits, then one call to action.
+- Hook with the viewer's pain in the first 2 s, then the product, then 3-5 concrete things it does, then proof or benefits, then one call to action.
+- Frame 0 is already moving. Never open on a logo or an empty frame.
 - One idea per scene. Each scene shows a title, 2-4 short points, and a visual that *demonstrates* the idea (a form filling in, a failed row turning green), not just icons.
 - Keep speech to 55-70% of the runtime so viewers can read (about 100 words for 60 s; table in `storytelling.md`).
-- Plain words. Short sentences. End users, not developers.
+- Plain words. Short sentences. End users, not developers. No "Meet X", "Unlock", "seamless", "the future of".
 - Words the voice may mispronounce go in `voice.pronounce` (`"Acme": "Ack-me"`). Captions keep the real spelling.
   `tts.mjs` lists names, acronyms and codes without an entry; the user must listen to those.
 - The closing line names the product ("Acme. Your data, always in sync."). Prefer a line the landing page already uses.
 - After every script change, read the narration that `plan.mjs` prints as one paragraph. A line inserted between two
   that belonged together reads as nonsense ("...through the API. Customers, items and prices.").
 
-### 5. Create the project, voice it, plan it
+### 5. Pick the look and write direction.md
+
+Read `${CLAUDE_SKILL_DIR}/references/design.md` sections 1-3. Name the look every product in the category
+ships, pick a look from the viewer's own world instead, choose a colour plan, and write `direction.md` in the
+project (six short blocks). Show it with the script when you ask the user to confirm the story. The template's
+look (light grey frame, blue accent, centred headlines) is a working example, not a look to keep.
+
+### 6. Create the project, voice it, plan it
 
 ```
 node $E/new.mjs <folder> --name <slug> [--size 1920x1080]
@@ -104,12 +113,12 @@ Put project folders where the user keeps generated work (in a repo, an ignored f
 
 Before editing `script.json`, read `${CLAUDE_SKILL_DIR}/references/script-format.md`: every field, scene timing, anchors (`scene:id`, `word:lineId:word`), sound types and music layers.
 
-### 6. Build the scenes in `index.html`
+### 7. Build the scenes in `index.html`
 
 The template is a working 4-scene example. Replace its scenes with yours. Read `references/scene-recipes.md` for
-proven scene patterns (chaos-to-order hook, logo reveal that moves to a corner, data moving between two app windows,
+proven scene patterns (chaos-to-order hook, logo arrival carried into the next scene, data moving between two app windows,
 field mapping, a form that types itself and gets clicked, calendar sweep, dashboard with a failure that gets fixed,
-benefit tiles, CTA) and the full `stage.js` API.
+benefits as a phrase swap, CTA) and the full `stage.js` API.
 
 The rule that everything depends on: **every visual is a pure function of time**. `onFrame(t => ...)` sets each
 element from `t` alone. The renderer seeks frames out of order in 4 browsers at once, so CSS animations,
@@ -123,10 +132,18 @@ works at any size and re-colours from one file.
 
 Vertical (1080x1920) is its own layout, not landscape or square with space added: see `references/scene-recipes.md` section 4.
 
-No dead air: each scene's first content is on screen before the cut, so no frame between scenes is empty for more than
-0.3 s (check.mjs measures it). Hold the end card still for at least 2 s after the voice ends.
+Design rules (detail and numbers in `references/design.md` sections 3-6):
+- One hero per frame. The product card or screen is the hero of every proof beat and fills at least 55% of the width.
+- Text a viewer must read is at least `43 * U`; headlines `80-120 * U`.
+- The ground changes at the turn and about 2/3 in (`.vm-ground`), never two filled scenes in a row.
+- Scenes cut hard (the `scene()` default). Each scene's first content arrives in its first 0.15 s, so no frame is
+  empty for more than 0.3 s (check.mjs measures it).
+- Nothing holds still for more than about 1 s: use `drift()` or a slow push. At most one overshoot in the film.
+- 1-3 big sound hits in the whole film, on visible events. No whoosh on every cut.
+- The end card is the logo, the closing line and the address as plain text. It holds 1-1.5 s after the voice
+  ends, still moving slowly. Need more time? Add a proof beat, not logo time.
 
-### 7. Review stills before the full render
+### 8. Review stills before the full render
 
 ```
 node $E/render.mjs <folder> stills --every 3        # or: stills 2.5 9 14.2
@@ -135,10 +152,11 @@ node $E/render.mjs <folder> stills --every 3        # or: stills 2.5 9 14.2
 Open `build/stills/sheet.png` (one labelled image) and look at it. Check a frame in the middle of every scene,
 plus the moments just after key cues. Look for: elements stuck at the top-left (missing position), items hidden behind
 others (draw order), text overflow or wrapping, empty areas in cards, captions covering content, low contrast,
-wrong brand colours, the last frame faded out. The renderer prints page errors and missing files. Fix all of them.
+wrong brand colours, the last frame faded out. Then ask the review questions in `references/design.md` section 7:
+a frame that would pass as a slide in a deck, or a small card alone on an empty ground, gets reworked here. The renderer prints page errors and missing files. Fix all of them.
 Stills take seconds; a full render takes minutes. Iterate here.
 
-### 8. Render, mix, check
+### 9. Render, mix, check
 
 ```
 node $E/build.mjs <folder> --from music     # music -> render -> text -> mix -> check
@@ -161,16 +179,22 @@ A 60 s 1080p video renders in about 7 minutes with 4 workers. The default worker
 It also warns about other videos left in `dist/`, and writes `build/contact.png`: the frame at every whole second,
 labelled with its exact time. Look at every frame of it before you report success.
 
-### 9. Review with fresh eyes
+### 10. Review with fresh eyes
 
 The person who built the video passes its own defects. Before you deliver, have a reviewer who did not build it
-(a fresh subagent, or a separate pass by you) go through `build/contact.png` and `claims.md` with this list:
-every claim true and sourced; every sender, receiver and status matches the product facts; the featured examples
+(a fresh subagent, or a separate pass by you) go through `build/contact.png`, `claims.md` and `direction.md` with this
+list: every claim true and sourced; every sender, receiver and status matches the product facts; the featured examples
 are the ones the user asked for; text readable at phone size; vertical layout uses the height; no empty or half-faded
-frame; the narration reads well as a paragraph; the end card names the product and holds. Fix what it finds, then
-run check.mjs again.
+frame; the narration reads well as a paragraph; the end card names the product; the video matches `direction.md`;
+the review questions in `references/design.md` section 7. Give the reviewer only these files, not your notes or this
+conversation: a reviewer who knows what you meant to build sees that instead of what is on screen.
 
-### 10. Deliver
+The reviewer answers with one word first, then at most 8 fixes in order of importance, no praise:
+**ship**, **fix** (the listed changes), or **rebuild** (the look or the story does not work; go back to step 5).
+Apply the fixes in one batch, run check.mjs again, and review once more. Stop after two review rounds and tell the
+user what is still open.
+
+### 11. Deliver
 
 Tell the user, briefly:
 - the file paths (video, thumbnail, captions). If the video goes to executives or customers, offer plain names:

@@ -27,6 +27,10 @@
     in: x => x * x * x,
     inOut: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
     back: x => { const c1 = 1.7, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); },
+    // Most of the travel early, then a long gentle landing: the default for anything arriving.
+    soft: x => (1 - Math.exp(-3.41 * x)) / (1 - Math.exp(-3.41)),
+    // Leaving: starts slow and is at full speed when it disappears.
+    exit: x => Math.pow(x, 2.6),
   };
   // Repeatable pseudo-random numbers: rand(seed) always gives the same value for the same seed.
   const rand = seed => { const x = Math.sin(seed * 12.9898) * 43758.5453; return x - Math.floor(x); };
@@ -59,9 +63,17 @@
     e.style.opacity = o;
     e.style.visibility = o <= 0.001 ? "hidden" : "visible";
   };
-  const pop = (e, t, t0, extra = {}) => { const p = ease.back(prog(t, t0, t0 + .45)); place(e, { s: lerp(.6, 1, p), o: clamp(prog(t, t0, t0 + .2)), ...extra }); };
-  const rise = (e, t, t0, dy = 30 * U) => { const p = ease.out(prog(t, t0, t0 + .5)); place(e, { y: (1 - p) * dy, o: p }); };
-  const slide = (e, t, t0, dx = -30 * U) => { const p = ease.out(prog(t, t0, t0 + .45)); place(e, { x: (1 - p) * dx, o: p }); };
+  // Entrances move on two channels (offset or scale, plus blur); opacity only helps for the first 0.15 s.
+  const blur = (e, p, px = 8 * U) => { e.style.filter = p < 1 ? `blur(${(1 - p) * px}px)` : ""; };
+  const pop = (e, t, t0, { spring = false, ...extra } = {}) => {
+    const p = (spring ? ease.back : ease.soft)(prog(t, t0, t0 + .45));
+    place(e, { s: lerp(spring ? .6 : .9, 1, p), y: spring ? 0 : (1 - p) * 18 * U, o: clamp(prog(t, t0, t0 + .15)), ...extra });
+    blur(e, p);
+  };
+  const rise = (e, t, t0, dy = 30 * U) => { const p = ease.soft(prog(t, t0, t0 + .5)); place(e, { y: (1 - p) * dy, o: clamp(prog(t, t0, t0 + .15)) }); blur(e, p); };
+  const slide = (e, t, t0, dx = -30 * U) => { const p = ease.soft(prog(t, t0, t0 + .45)); place(e, { x: (1 - p) * dx, o: clamp(prog(t, t0, t0 + .15)) }); blur(e, p); };
+  // A slow wander for anything that holds still longer than about a second, so no frame looks frozen.
+  const drift = (t, seed = 0, amp = 6 * U) => ({ x: Math.sin(t * .6 + seed * 2.3) * amp, y: Math.cos(t * .45 + seed * 1.7) * amp * .6 });
   const typed = (text, t, a, b) => text.slice(0, Math.round(text.length * prog(t, a, b)));
   const countUp = (t, a, b, to, from = 0) => Math.round(lerp(from, to, ease.out(prog(t, a, b))));
 
@@ -69,17 +81,19 @@
   const updaters = [];
   const onFrame = fn => updaters.push(fn);
 
-  // A scene is a full-frame layer shown between its planned start and end, with short fades.
+  // A scene is a full-frame layer shown between its planned start and end. Default is a hard cut:
+  // a fade between scenes reads as a slideshow, and its middle frames are almost empty.
   const sceneOrder = TL.sceneOrder;
-  const scene = (id, { fadeIn = true, fadeOut = id !== sceneOrder.at(-1), fade = .35 } = {}) => {
+  const scene = (id, { fadeIn = true, fadeOut = id !== sceneOrder.at(-1), fade = 0 } = {}) => {
     const root = el("div", "vm-scene");
     const [a, b] = [S(id), E(id)];
     const s = {
       id, root, start: a, end: b,
       visible(t) {
-        const o = (fadeIn && a > 0 ? prog(t, a, a + fade) : 1) * (fadeOut ? 1 - prog(t, b - fade, b) : 1);
-        const on = t >= a - .01 && t <= b + .01 && o > 0;
-        root.style.opacity = o;
+        const o = fade > 0 ? (fadeIn && a > 0 ? prog(t, a, a + fade) : 1) * (fadeOut ? 1 - prog(t, b - fade, b) : 1) : 1;
+        const on = (fade > 0 ? t >= a - .01 && t <= b + .01 : t >= a && t < b + (id === sceneOrder.at(-1) ? .01 : 0)) && o > 0;
+        // Opacity, not only visibility: place() sets visibility on children, which overrides a hidden parent.
+        root.style.opacity = on ? o : 0;
         root.style.visibility = on ? "visible" : "hidden";
         return on;
       },
@@ -99,7 +113,7 @@
     }
     return {
       root,
-      update(t, fade = 1) { for (const w of words) { const p = ease.out(prog(t, w.t, w.t + .4)); place(w.e, { y: (1 - p) * 34 * U, o: p * fade }); } },
+      update(t, fade = 1) { for (const w of words) { const p = ease.soft(prog(t, w.t, w.t + .5)); place(w.e, { y: (1 - p) * 0.05 * H, o: clamp(prog(t, w.t, w.t + .12)) * fade }); blur(w.e, p, 6 * U); } },
     };
   };
   // Same, but word times come from a spoken line: sayLine(parent, y, "hook", { breakAfter: ["tool"], highlight: ["email"] })
@@ -171,7 +185,7 @@
   window.ready = document.fonts.ready.then(() => Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = r; i.onerror = r; }))));
 
   Object.assign(window, {
-    TL, W, H, U, stage, clamp, prog, lerp, ease, rand, S, E, L, LE, Wd, el, at, place, pop, rise, slide, typed, countUp,
+    TL, W, H, U, stage, clamp, prog, lerp, ease, rand, S, E, L, LE, Wd, el, at, place, pop, rise, slide, drift, blur, typed, countUp,
     onFrame, scene, headline, sayLine, column, cursor, seek, CHECK_ICON: CHECK,
   });
 

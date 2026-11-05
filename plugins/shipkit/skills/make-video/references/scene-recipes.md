@@ -3,8 +3,8 @@
 ## Contents
 1. Page skeleton
 2. stage.js API
-3. Recipes: chaos-to-order hook, logo reveal that moves to a corner, data moving between two windows, field mapping,
-   form that types itself + cursor click, calendar sweep, dashboard with a failure that gets fixed, benefit tiles,
+3. Recipes: chaos-to-order hook, logo arrival carried into the next scene, data moving between two windows, field mapping,
+   form that types itself + cursor click, calendar sweep, dashboard with a failure that gets fixed, benefits as a phrase swap,
    call to action, background motif
 4. Layout for any aspect ratio
 
@@ -40,25 +40,28 @@ The scripts go in `<body>` after `#stage`. `stage.js` needs `document.body`.
 | `L(id, off)`, `LE(id, off)` | when a voice line starts and stops speaking |
 | `Wd(line, word, off)` | estimated time a word is spoken (`"and#2"` gives the second "and") |
 | `prog(t, a, b)` | 0 -> 1 as t goes from a to b (clamped) |
-| `lerp`, `clamp`, `ease.out/in/inOut/back`, `rand(seed)` | maths. `rand` is repeatable; never use `Math.random()`. |
+| `lerp`, `clamp`, `rand(seed)` | maths. `rand` is repeatable; never use `Math.random()`. |
+| `ease.soft` / `ease.exit` / `ease.inOut` / `ease.back` | arriving / leaving / camera moves / overshoot (once per film). `ease.out`, `ease.in` also exist. |
 | `el(tag, cls, parent, html)` | create an element (parent defaults to the stage) |
 | `at(e, x, y)` | absolute position (also sets `position:absolute`) |
 | `place(e, {x, y, s, r, o})` | transform and opacity; also hides the element at o = 0 |
-| `pop(e, t, t0, extra)` | scale-in with a small overshoot at t0 |
-| `rise(e, t, t0, dy)` / `slide(e, t, t0, dx)` | fade in while moving up / sideways |
+| `pop(e, t, t0, extra)` | arrive at t0: scale from 0.9 plus blur. `{ spring: true }` overshoots instead (once per film). |
+| `rise(e, t, t0, dy)` / `slide(e, t, t0, dx)` | arrive moving up / sideways, with blur |
+| `blur(e, p, px)` | blur that clears as `p` goes 0 -> 1; pair it with your own `place()` arrivals |
+| `drift(t, seed, amp)` | `{x, y}` slow wander to add to anything held longer than about 1 s |
 | `typed(text, t, a, b)` | the part of `text` typed so far |
 | `countUp(t, a, b, to, from)` | a number counting up |
-| `scene(id, {fadeIn, fadeOut, fade})` | layer + `visible(t)`. The last scene does not fade out, so the final frame is sharp. |
+| `scene(id, {fadeIn, fadeOut, fade})` | layer + `visible(t)`. Cuts hard by default (`fade: 0`); a fade between scenes reads as a slideshow. |
 | `headline(parent, y, lines, {size})` | words rise in one by one: `[[["Every", t], ["tool", t2, true]]]` (true = highlight) |
 | `sayLine(parent, y, lineId, {text, breakAfter, highlight, size})` | headline timed to the spoken words of a line |
-| `column(parent, {x, y, width, eyebrow, title, t0, bullets})` | eyebrow + title + check-mark points -> returns `update(t)` |
+| `column(parent, {x, y, width, eyebrow, title, t0, bullets})` | eyebrow + title + check-mark points -> returns `update(t)`. Reads as a slide: not for proof beats. |
 | `cursor(parent)` -> `move(t, [[time, x, y], ...], clickAt)` | mouse pointer that glides between points, with a click ripple |
 | `onFrame(fn)` | register a per-frame update |
-| CSS classes | `vm-card`, `vm-pill` (`ok`, `fail`, `run`, `info`), `vm-btn`, `vm-eyebrow`, `vm-title`, `vm-bullet`, `vm-hl`, `vm-headline` |
+| CSS classes | `vm-card`, `vm-pill` (`ok`, `fail`, `run`, `info`), `vm-btn`, `vm-eyebrow`, `vm-title`, `vm-bullet`, `vm-hl`, `vm-headline`, `vm-ground` (scene filled with the brand colour) |
 | `window.CAPTIONS = false` | turn off burned-in captions (set before stage.js loads) |
 
-Swap content instead of animating it when a state changes (a status pill Running -> Succeeded): stack both and cross-fade
-with `place(a, {o: 1 - p})` and `place(b, {s: ease.back(p), o: p})`. Setting `textContent` from `t` is also fine.
+Swap content in one frame when a state changes (a status pill Running -> Succeeded): set `className` and `textContent`
+from `t`. A fade between two states looks hesitant.
 
 ## 3. Recipes
 
@@ -82,20 +85,23 @@ onFrame(t => {
 Envelopes flying between cards: for each envelope `k` with launch time `t0 = S("hook", 3 + k * .33)` and a pair of cards,
 `p = prog(t, t0, t0 + 1)`, `x = lerp(x0, x1, ease.inOut(p))`, `y = yMid - Math.sin(Math.PI * p) * 190 * U`, opacity `Math.min(1, Math.sin(Math.PI * p) * 4)`.
 
-### Logo reveal that moves to a corner
-Inline the logo SVG, and wrap the icon's inner parts and the wordmark in `<g>` groups, so they can move on their own.
+### Logo arrival carried into the next scene
+The logo arrives big (1.3-1.6x) and settles, then shrinks into the spot it takes in the next scene (the title bar of the
+product window), and that scene's own copy takes over. Never park it in a frame corner for the rest of the film: a
+corner logo reads as a TV channel badge. Inline the logo SVG, and wrap the icon's inner parts and the wordmark in `<g>`
+groups, so they can move on their own.
 ```js
 const logo = el("div", "vm-abs", stage, LOGO_SVG);   // stage, not the scene root: it must outlive the scene
 logo.style.transformOrigin = "0 0";
-const home = { x: (W - LOGO_W) / 2, y: H * .36 }, corner = { x: 70 * U, y: 50 * U, s: .26 };
+const home = { x: (W - LOGO_W) / 2, y: H * .36 }, corner = { x: winX + 24 * U, y: winY + 18 * U, s: .2 };   // next scene's title bar
 onFrame(t => {
-  const pIn = ease.back(prog(t, S("meet", .3), S("meet", .8)));
-  const pWord = ease.out(prog(t, S("meet", .6), S("meet", 1.2)));
-  const pCorner = ease.inOut(prog(t, E("meet", -.6), E("meet", .1)));
-  const pOut = prog(t, S("cta", -.3), S("cta"));                   // hand over to the CTA's own big logo
+  const pIn = ease.soft(prog(t, S("meet"), S("meet", .6)));
+  const pWord = ease.soft(prog(t, S("meet", .3), S("meet", .9)));
+  const pCorner = ease.inOut(prog(t, E("meet", -.5), E("meet", .1)));
+  const pOut = prog(t, S("full", .1), S("full", .15));             // the window's own logo takes over
   word.style.opacity = pWord;
   word.setAttribute("transform", `translate(${-30 * (1 - pWord)},0)`);
-  logo.style.transform = `translate(${lerp(home.x, corner.x, pCorner)}px,${lerp(home.y, corner.y, pCorner)}px) scale(${lerp(1, corner.s, pCorner)})`;
+  logo.style.transform = `translate(${lerp(home.x, corner.x, pCorner)}px,${lerp(home.y, corner.y, pCorner)}px) scale(${lerp(lerp(1.5, 1, pIn), corner.s, pCorner)})`;
   logo.style.opacity = clamp(pIn * 3) * (1 - pOut);
 });
 ```
@@ -145,25 +151,31 @@ Stats boxes count up (`countUp`). One row is marked failed: a red inset border a
 and a reason line appears under it with a "Retry" button. A cursor clicks Retry; the status goes Failed -> Running (spinner rotated by `t * 540` deg) -> Succeeded;
 the failed count drops to 0 and the success count rises by 1. This small story shows value better than a static dashboard.
 
-### Benefit tiles
-A centred eyebrow and headline, then 3-4 `vm-card` tiles in a row (a 2x2 grid in portrait): icon circle, title, one sentence.
-Each tile at the time its benefit is spoken: `const p = ease.back(prog(t, t0, t0 + .5)); place(tile, { y: (1 - p) * 60 * U, o: clamp(prog(t, t0, t0 + .25)) })`.
+### Benefits as a phrase swap
+Not a row of same-size icon tiles (that is the most common generated-video frame). Show one benefit at a time, big
+(`90-110 * U`), on the word that says it, replacing the previous one: the old phrase leaves with `ease.exit` in 0.2 s while
+the new one arrives with `rise`. Behind it, keep the product card from the last proof beat in view and change the one
+detail each benefit is about (an error count dropping to 0, a time stamp updating).
 
 ### Call to action
-A big logo (pop + wordmark wipe), the tagline via `sayLine` with the key phrase highlighted, then a `vm-btn` with the URL, then a small
-"by <company>" line. Put a full-frame surface layer behind it that fades in at `S("cta")` if the CTA should look different from the rest.
+The logo arriving from 1.25x with blur, the closing line via `sayLine` with the key phrase highlighted, and the address as
+plain text in the accent colour. No button shape, no "by <company>" line, no row of links. The scene holds 1-1.5 s after
+the voice with a slow `drift` on the logo group. Fill it with `.vm-ground` if the scene before it was light.
 It is the last scene, so it does not fade out, and its last frame becomes `thumbnail.png`.
 
 ### Background motif
-A large, faint (5-9% opacity) shape from the brand drifts slowly behind everything: `translate(${Math.sin(t * .25) * 14}px, 0)`.
-The landing page's hero art is often the right source. Add a soft radial glow near the bottom. This keeps white frames from looking empty.
+A large shape from the brand drifts slowly behind everything: `translate(${Math.sin(t * .25) * 14}px, 0)`. The landing
+page's hero art is often the right source. Give it real presence (a filled shape at 10-20% of the ground colour's
+strength), not a ghost at 5% opacity, and never faint text. A frame that still looks empty needs a bigger hero, not more
+background.
 
 ## 4. Layout for any aspect ratio
 
-`const portrait = H > W;` Landscape: explainer column on the left (x = 130U, width about 700U), demonstration on the right (x >= W - 1000U).
-Portrait: column on top (y about 200U), demonstration below (y ~ H * .55), full width minus 90U margins. Square: column above,
-smaller demonstration, or drop the column and rely on the headline. Captions sit at 4.5% from the bottom. Keep important things out of
-the bottom 15% and top 10% in vertical video: TikTok, Reels and Shorts draw their buttons there.
+`const portrait = H > W;` Landscape: a short headline at the top (y about 0.08-0.12 H) and the demonstration as the hero below
+it, at least 0.55 W wide, centred or slightly off centre. Not a left text column with a picture on the right: that is a slide.
+Portrait: headline on top (y about 0.1 H), demonstration below (y ~ H * .36), full width minus 60U margins. Square: the same
+as portrait with fewer rows. Captions sit at 4.5% from the bottom. Keep important things out of the bottom 20% and top 10%
+in vertical video: TikTok, Reels and Shorts draw their buttons there.
 
 Vertical (1080x1920) is its own layout, not the landscape or square layout with space above and below. Rules: headline in
 the top third, the visual filling the middle, cards at full width with about 60 px side margins, the bottom kept for
